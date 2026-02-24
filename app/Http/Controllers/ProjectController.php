@@ -39,6 +39,31 @@ class ProjectController extends Controller
         return redirect()->route('projects.index');
     }
 
+    public function show(Project $project)
+    {
+        return view('projects.show', compact('project'));
+    }
+
+    public function edit(Project $project)
+    {
+        return view('projects.edit', compact('project'));
+    }
+
+    public function update(Project $project)
+    {
+        $fields = request()->validate([
+            'name' => ['required'],
+            'description' => ['required'],
+            'code' => ['required'],
+        ]);
+
+        if (! $project->update($fields)) {
+            throw new \Exception('There was an error processing your request', 500);
+        }
+
+        return redirect()->route('projects.show', compact('project'));
+    }
+
     public function destroy(Project $project)
     {
         $project->delete();

@@ -23,20 +23,11 @@
                             </div>
                         </div>
                         <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                            {{-- <p class="text-sm/6 text-gray-900">Co-Founder / CEO</p> --}}
-                            <p class="grid grid-cols-2">
-                                <div>
-                                    <form action="{{ route('projects.destroy', ['project' => $project]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="bg-red-500 text-white rounded px-3 py-1">Delete</button>
-                                    </form>
-                                </div>
-                                <div>
-                                    <button class="bg-green-600 text-white rounded px-3 py-1">Update</button>
-                                </div>
+                            <p>
+                                <a href="{{ route('projects.show', ['project' => $project]) }}" class="bg-gray-600 text-white rounded px-3 py-1">View</a>
                             </p>
-                            <p class="mt-1 text-sm text-gray-500">Created {{ $project->created_at }}</p>
+                            {{-- <p class="text-sm/6 text-gray-900">Co-Founder / CEO</p> --}}
+                            
                         </div>
                     </li>
                 @endforeach

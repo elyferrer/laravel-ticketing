@@ -18,7 +18,8 @@
                             </div>
                             <div class="hidden md:block">
                                 <div class="ml-10 flex items-baseline space-x-4">
-                                    <x-nav-link href="/" :active="Route::is('home')">Dashboard</x-nav-link>
+                                    <x-nav-link href="{{ route('home') }}" :active="Route::is('home')">Dashboard</x-nav-link>
+                                    <x-nav-link href="{{ route('projects.index') }}" :active="Route::is('projects.*')">Projects</x-nav-link>
                                 </div>
                             </div>
                         </div>
