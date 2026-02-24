@@ -3,26 +3,26 @@
 namespace App\Policies;
 
 use App\Enums\UserTypeEnum;
-use App\Models\Ticket;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class TicketPolicy
+class ProjectPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user, Ticket $ticket): bool
+    public function viewAny(User $user): bool
     {
-        return false;
+        return UserTypeEnum::tryFrom($user->user_type_id) === UserTypeEnum::ADMIN;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Ticket $ticket): bool
+    public function view(User $user, Project $project): bool
     {
-        return $user->id === $ticket->assignee_id || UserTypeEnum::tryFrom($user->user_type_id) === UserTypeEnum::ADMIN;
+        return false;
     }
 
     /**
@@ -36,7 +36,7 @@ class TicketPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Ticket $ticket): bool
+    public function update(User $user, Project $project): bool
     {
         return false;
     }
@@ -44,7 +44,7 @@ class TicketPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Ticket $ticket): bool
+    public function delete(User $user, Project $project): bool
     {
         return false;
     }
@@ -52,7 +52,7 @@ class TicketPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Ticket $ticket): bool
+    public function restore(User $user, Project $project): bool
     {
         return false;
     }
@@ -60,7 +60,7 @@ class TicketPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Ticket $ticket): bool
+    public function forceDelete(User $user, Project $project): bool
     {
         return false;
     }

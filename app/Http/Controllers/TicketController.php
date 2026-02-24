@@ -2,24 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserTypeEnum;
+use App\Mail\TicketAssignmentMail;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class TicketController extends Controller
 {
     public function index(Project $project): View
     {
-        $tickets = Ticket::where('project_id', $project->id)->with([
+        $tickets = Ticket::with([
             'project', 
             'status', 
             'assignee', 
             'createdBy'
-        ])->get();
+        ]);
+
+        $conditions = [
+            'project_id' => $project->id
+        ];
+
+        if (UserTypeEnum::tryFrom(Auth::user()->user_type_id) !== UserTypeEnum::ADMIN) {
+            $conditions['assignee_id'] = Auth::user()->id;
+        }
+
+        $tickets->where($conditions);
+        
+        $tickets = $tickets->get();
 
         return view('tickets.index', compact('project', 'tickets'));
     }
@@ -51,9 +66,16 @@ class TicketController extends Controller
         $fields['created_by'] = Auth::user()->id;
         $fields['project_id'] = $project->id;
         
-        if (! Ticket::create($fields)) {
+        $ticket = Ticket::create($fields);
+        if (! $ticket) {
             abort(500);
         }
+
+        $user = User::where('id', $ticket->assignee_id)->first();
+        
+        Mail::to($user->email)->queue(
+            new TicketAssignmentMail($user, $project, $ticket)
+        );
 
         return redirect()->route('projects.show', ['project' => $project]);
     }

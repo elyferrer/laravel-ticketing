@@ -1,3 +1,7 @@
+@php 
+    use App\Enums\UserTypeEnum; 
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-gray-100">
     <head>
@@ -19,7 +23,10 @@
                             <div class="hidden md:block">
                                 <div class="ml-10 flex items-baseline space-x-4">
                                     <x-nav-link href="{{ route('home') }}" :active="Route::is('home')">Dashboard</x-nav-link>
-                                    <x-nav-link href="{{ route('projects.index') }}" :active="Route::is('projects.*')">Projects</x-nav-link>
+                                    @if (UserTypeEnum::tryFrom(Auth::user()->user_type_id) === UserTypeEnum::ADMIN)
+                                        <x-nav-link href="{{ route('projects.index') }}" :active="Route::is('projects.*')">Projects</x-nav-link>
+                                    @endif
+                                    <x-nav-link href="{{ route('tickets.project.index') }}" :active="Route::is('tickets.*')">Tickets</x-nav-link>
                                 </div>
                             </div>
                         </div>
