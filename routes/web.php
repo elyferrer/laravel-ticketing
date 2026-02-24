@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,3 +15,10 @@ Route::delete('/logout', [AuthController::class, 'destroy'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+Route::prefix('/projects')->name('projects.')->group(function() {
+    Route::get('/', [ProjectController::class, 'index'])->name('index');
+    Route::post('/', [ProjectController::class, 'store'])->name('store');
+    Route::get('/create', [ProjectController::class, 'create'])->name('create');
+    Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
+})->middleware('auth');
