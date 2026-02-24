@@ -23,6 +23,8 @@ class RegisterController extends Controller
             'password' => ['required', 'confirmed'],
         ]);
 
+        $fields['user_type_id'] = 1;
+
         if ($user = User::create($fields)){
             Mail::to($user->email)->queue(new UserRegistrationEmail($user));
 

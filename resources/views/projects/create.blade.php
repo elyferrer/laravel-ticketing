@@ -23,10 +23,11 @@
                             </x-form-field>
 
                             <x-form-field>
-                                <x-form-label for="code">Code</x-form-label>
+                                <x-form-label for="description">Description</x-form-label>
                                 <div class="mt-2">
-                                    <x-form-input id="code" type="text" name="code" :value="old('code')" placeholder="Eg. FFA, APPR" autocomplete="off" />
-                                    <x-form-error name="code" />
+                                    <x-form-text name="description" id="description" :value="old('description')" 
+                                        placeholder="Tell us something about this project" autocomplete="off" />
+                                    <x-form-error name="password" />
                                 </div>
                             </x-form-field>
 

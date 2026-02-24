@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +42,14 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        return view('projects.show', compact('project'));
+        $tickets = Ticket::where('project_id', $project->id)->with([
+            'project', 
+            'status', 
+            'assignee', 
+            'createdBy'
+        ])->get();
+
+        return view('projects.show', compact('project', 'tickets'));
     }
 
     public function edit(Project $project)
