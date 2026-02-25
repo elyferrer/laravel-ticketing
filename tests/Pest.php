@@ -11,6 +11,7 @@
 |
 */
 
+use App\Models\Project;
 use App\Models\User;
 
 pest()->extend(Tests\TestCase::class)
@@ -52,7 +53,17 @@ function asUser() {
     return User::factory()->user()->create();
 }
 
-
 function asAdmin() {
     return User::factory()->admin()->create();
+}
+
+function createProject(User $user) {
+    $fields = [
+        "name" => "Test Project",
+        "description" => "Test description for the test project",
+        "code" => "FFA",
+        "created_by" => $user->id
+    ];
+
+    return Project::factory()->create($fields);
 }

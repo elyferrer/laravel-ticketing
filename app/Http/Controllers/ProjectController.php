@@ -58,9 +58,9 @@ class ProjectController extends Controller
     public function update(Project $project)
     {
         $fields = request()->validate([
-            'name' => ['required'],
-            'description' => ['required'],
-            'code' => ['required'],
+            'name' => [''],
+            'description' => [''],
+            'code' => [''],
         ]);
 
         if (! $project->update($fields)) {
