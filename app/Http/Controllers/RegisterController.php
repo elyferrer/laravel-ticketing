@@ -21,9 +21,9 @@ class RegisterController extends Controller
             'name' => ['required'],
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed'],
+            'user_type_id' => ''
         ]);
-
-        $fields['user_type_id'] = 1;
+        // $fields['user_type_id'] = 1;
 
         if ($user = User::create($fields)){
             Mail::to($user->email)->queue(new UserRegistrationEmail($user));

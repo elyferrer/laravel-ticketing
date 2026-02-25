@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\UserTypeEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -39,6 +40,20 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_type_id' => UserTypeEnum::ADMIN->value,
+        ]);
+    }
+
+    public function user(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_type_id' => UserTypeEnum::USER->value,
         ]);
     }
 }

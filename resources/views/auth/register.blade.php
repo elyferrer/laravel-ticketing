@@ -18,6 +18,7 @@
         <div class="w-1/4 drop-shadow-lg">
             <form action="{{ route('register.store') }}" method="POST" class="w-full">
                 @csrf
+                <input type="hidden" value="2" name="user_type_id" id="user_type_id" />
                 <div class="space-y-12">
                     <div class="border-b border-gray-900/10 pb-12">
                         <h2 class="text-base/7 text-xl font-semibold text-gray-900">Register</h2>
