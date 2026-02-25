@@ -11,5 +11,5 @@ test('if user can access projects dashboard', function () {
 test('if user can access create project page', function () {
     actingAs(asUser())
         ->get(route('projects.create'))
-        ->assertStatus(403);
+        ->assertStatus(200);
 });
