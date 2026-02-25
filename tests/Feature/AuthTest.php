@@ -12,19 +12,19 @@ function admin() {
     return User::factory()->admin()->create();
 }
 
-test('if the login route exists', function () {
+test('that the login page exists', function () {
     $response = get('/login');
 
     $response->assertStatus(200);
 });
 
-test('if the registration route exists', function () {
+test('that the registration page exists', function () {
     $response = get('/register');
 
     $response->assertStatus(200);
 });
 
-test('if the user successfully registers', function () {
+test('that the user successfully registers', function () {
     $fields = [
         'name' => 'John Doe',
         'email' => 'johndoe@test.com',
@@ -44,7 +44,7 @@ test('if the user successfully registers', function () {
     assertAuthenticated();
 });
 
-test('if the user successfully logs in', function () {
+test('that the user successfully logs in', function () {
     $response = post(route('login.store'), [
         'email' => admin()->email,
         'password' => 'password'
